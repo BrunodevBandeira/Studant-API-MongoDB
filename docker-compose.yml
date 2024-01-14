@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  mongodb:
+    build:
+      context: ./mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+      - mongodb-config:/data/configdb
+
+  javaapp:
+    build:
+      context: ./java
+    container_name: javaapp
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb-data:
+  mongodb-config:
